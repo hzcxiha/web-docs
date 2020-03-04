@@ -770,7 +770,6 @@ String | 与JS相同
 Array | 与JS相同; 增加了泛型数组, 元组(Tuple)
 Enum | enum类型是为了给一个数字集合更友好地命名
 any | any类型可以表示任意JavaScript值
-
 void | void就是any的对立面，即所有类型都不存在的时候。你会在一个没有返回值的函数看到它
 
 ### 对面向对象思想进行了增强
