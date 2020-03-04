@@ -731,3 +731,78 @@ export default {
   }
 }
 ```
+## [TypeScript](https://www.tslang.cn/samples/index.html)
+
+> TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
+
+TypeScript是一个编译到纯JS的有类型定义的JS超集。
+TS遵循当前以及未来出现的ECMAScript规范。TS不仅能兼容现有的JavaScript 代码，它也拥有兼容未来版本的JavaScript的能力。大多数TS的新增特性 都是基于未来的JavaScript提案，这意味着许多TS代码在将来很有可能会变成ECMA的标准.
+
+2009年微软公司提出了TypeScript的第一个版本，是由C#之父Anders Hejlsberg 领导开发的, 了解C#的同学学起来就幸福了。
+
+### TS有什么好处？
+
+**TypeScript能从可维护性、健壮性等方面提高代码质量。**
+
+常见的代码检查工具：JsHint / JsLint / EsLint
+
+Eslint 这些语法检查的能提前检查出来这些错误，减少了调试的成本，减少了线上bug.
+
+
+但是还有不足，比如一些参数类型，个数的错误检测不到。
+谨慎的程序员会做个判空处理等，来避免这样的错误。如果未处理，在复杂的线上环境中，程序就有可能会崩溃。
+而TS可以帮助我们避免这些问题，从而提高代码健壮性, 因为TS是强类型的语言，下面看下它怎样约束类型的。
+
+#### 类型注解
+
+
+```
+let str: string = 'ts';
+let isShow: boolean = true;
+```
+
+
+类型 | 描述
+---|---
+Boolean | 与JS相同
+Number | 与JS相同
+String | 与JS相同
+Array | 与JS相同; 增加了泛型数组, 元组(Tuple)
+Enum | enum类型是为了给一个数字集合更友好地命名
+any | any类型可以表示任意JavaScript值
+
+void | void就是any的对立面，即所有类型都不存在的时候。你会在一个没有返回值的函数看到它
+
+### 对面向对象思想进行了增强
+
+#### 接口（Interface）
+
+TypeScript的核心原则之一是对值所具有的结构进行类型检查。 在TypeScript里，接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约。
+
+
+```
+interface SquareConfig {
+  color?: string;
+  width?: number;
+}
+```
+
+#### 泛型
+
+泛型用来创建可重用的组件，一个组件可以支持多种类型的数据。 这样用户就可以以自己的数据类型来使用组件。
+
+## vue-property-decorator
+
+[文档](https://www.npmjs.com/package/vue-property-decorator)
+
+[GitHub](https://github.com/kaorun343/vue-property-decorator#Provide)
+
+[文章1](https://juejin.im/post/5c173a84f265da610e7ffe44)
+
+[文章2](https://www.jianshu.com/p/88ff51bb9ebf)
+
+### vue项目三步走
+
+1. 建页面
+1. 配路由
+1. 增store（可有可无）
