@@ -805,3 +805,79 @@ interface SquareConfig {
 1. 建页面
 1. 配路由
 1. 增store（可有可无）
+
+## VUE重点
+
+### Vue的生命周期
+- beforeCreate  
+    实例组件刚创建，元素DOM和数据都还没有初始化，暂时不知道能在这个周期里面进行生命操作。
+- created  
+    数据data已经初始化完成，方法也已经可以调用，但是DOM未渲染。在这个周期里面如果进行请求是可以改变数据并渲染，由于DOM未挂载，请求过多或者占用时间过长会导致页面线上空白。
+- beforeMount  
+    DOM未完成挂载，数据初始化完成，但是数据的双向绑定还是显示{{}}，这是因为Vue采用了VirtualDOM（虚拟Dom）技术。先占住了一个坑。
+- mounted  
+    数据和DOM都完成挂载，在上一个周期占位的数据把值给渲染进去。一般请求会放在这个地方，因为这边请求改变数据之后刚好能渲染。
+- beforeUpdate  
+    只要是页面数据改变了都会触发，数据更新之前，页面数据还是原来的数据，当你请求赋值一个数据的时候会执行这个周期，如果没有数据改变不执行。
+- updated  
+    只要是页面数据改变了都会触发，数据更新完毕，页面的数据是更新完成的。beforeUpdate和updated要谨慎使用，因为页面更新数据的时候都会触发，在这里操作数据很影响性能和容易死循环。
+- beforeDestroy  
+    这个周期是在组件销毁之前执行，这个其实有点类似路由钩子beforeRouterLeave,都是在路由离开的时候执行，只不过beforeDestroy无法阻止路由跳转，但是可以做一些路由离开的时候操作，因为这个周期里面还可以使用data和method。比如一个倒计时组件，如果在路由跳转的时候没有清除，这个定时器还是在的，这时候就可以在这个里面清除计时器。
+- Destroyed  
+    实例销毁后
+
+### 数据双向绑定
+
+Object.defineProperty是ES5新增的一个API，其作用是给对象的属性增加更多的控制
+
+Object.defineProperty(obj, prop, descriptor)
+
+参数 obj: 需要定义属性的对象（目标对象）
+
+prop: 需被定义或修改的属性名（对象上的属性或者方法）
+
+对于setter和getter，我的理解是它们是一对勾子（hook）函数，当你对一个对象的某个属性赋值时，则会自动调用相应的setert函数；而当获取属性时，则调用getter函数。这也是实现双向数据绑定的关键。
+
+
+```
+<body>
+  <div id="app">
+    <input type="text" id="txt">
+    <p id="show-txt"></p>
+  </div>
+</body>
+<script>
+  var obj = {}
+  Object.defineProperty(obj, 'txt', {
+    set: function (val) {
+      document.getElementById('txt').value = val
+      document.getElementById('show-txt').innerHTML = val
+    }
+  })
+
+  document.addEventListener('keyup', function (e) {
+    obj.txt = e.target.value
+  })
+</script>
+```
+
+### vue实现权限控制
+[菜单权限](https://www.jianshu.com/p/aede33e897a5)
+
+[按钮权限1](https://www.jianshu.com/p/e50633a9005e)
+
+[按钮权限2](https://www.cnblogs.com/yzyh/p/11550416.html)
+
+[自定义指令](https://blog.csdn.net/qq_31837621/article/details/80819126)
+
+### 插槽
+
+[文档](https://cn.vuejs.org/v2/guide/components-slots.html)
+
+[文章](https://www.jianshu.com/p/b0234b773b68)
+
+### ant-design-vue
+
+[form](https://www.antdv.com/components/form-cn/)
+
+[table](https://www.antdv.com/components/table-cn/)
