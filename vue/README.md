@@ -532,6 +532,7 @@ prop 的定义应该尽量详细，至少需要指定其类型
 ## vuex
 
 [文档](https://vuex.vuejs.org/zh/installation.html)
+[官方示例](https://github.com/vuejs/vuex/tree/dev/examples)
 
 ### 引言
 
@@ -881,3 +882,74 @@ prop: 需被定义或修改的属性名（对象上的属性或者方法）
 [form](https://www.antdv.com/components/form-cn/)
 
 [table](https://www.antdv.com/components/table-cn/)
+
+### vue.config.js常用配置
+
+[文档](https://cli.vuejs.org/zh/config/#%E5%85%A8%E5%B1%80-cli-%E9%85%8D%E7%BD%AE)
+
+### publicPath
+部署应用包时的基本 URL。（ `Vue Router` 模式是 hash 时使用）
+
+
+默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上，例如 https://www.my-app.com/。如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在 https://www.my-app.com/my-app/，则设置 publicPath 为 /my-app/。
+
+```
+// vue.config.js 文件中配置
+module.exports = {
+  publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用
+  //  publicPath: '/app/', // 署应用包时的基本 URL。  vue-router history模式使用
+  outputDir: 'dist', //  生产环境构建文件的目录
+  assetsDir: 'static', //  outputDir的静态资源(js、css、img、fonts)目录
+  productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
+}
+
+```
+
+### 配置 proxy 跨域
+开发过程中，如果后台接口跨域访问，需要设置
+```
+// vue.config.js 文件中配置
+module.exports = {
+   devServer: {
+    host: '0.0.0.0',
+    port: 8080,
+    open: false, // 启动后打开浏览器
+    proxy: { //配置多个代理
+        '/api': {
+            target: 'http://10.177.97.64:9181', // //代理地址，这里设置的地址会代替axios中设置的baseURL
+            changeOrigin: true,
+            pathRewrite: {
+              '^/api': ''
+              //pathRewrite: {'^/api': '/'} 重写之后url为 http://10.177.97.64:9181/xxxx
+              //pathRewrite: {'^/api': '/api'} 重写之后url为 http://10.177.97.64:9181/api/xxxx
+            }
+        }
+    },
+    overlay: {
+      //  当出现编译器错误或警告时，在浏览器中显示全屏覆盖层
+      warnings: false,
+      errors: true
+    }
+    // ...
+  }
+}
+```
+
+### 配置 alias 别名
+
+配置目录别名，简化引用
+```
+// vue.config.js 文件中配置
+const path = require('path')
+module.exports = {
+  // ...
+  chainWebpack: config => {
+        config.resolve.alias
+            .set('@api', path.resolve(__dirname, 'src/api'))
+            .set('@common', path.resolve(__dirname, 'src/common'))
+            .set('@components', path.resolve(__dirname, 'src/components'))
+  },
+  // ...
+}
+
+```
